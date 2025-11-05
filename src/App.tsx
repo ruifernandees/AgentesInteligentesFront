@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ImageUpload from './components/ImageUpload'
 import ResultModal from './components/ResultModal'
 
