@@ -83,7 +83,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
                     <img
                       src={originalImageUrl}
                       alt="Imagem original"
-                      className="w-full rounded-lg shadow-sm border border-gray-200"
+                      className="w-full max-w-sm h-80 object-contain rounded-lg shadow-sm border border-gray-200 mx-auto"
                     />
                     <p className="text-sm text-gray-600 text-center">
                       Imagem de satélite carregada para análise
@@ -98,7 +98,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
                     <img
                       src={predictedImageUrl}
                       alt="Segmentação predita"
-                      className="w-full rounded-lg shadow-sm border border-gray-200"
+                      className="w-full max-w-sm h-80 object-contain rounded-lg shadow-sm border border-gray-200 mx-auto"
                     />
                     <p className="text-sm text-gray-600 text-center">
                       Resultado da segmentação em 6 classes
@@ -152,9 +152,24 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
           {/* Footer */}
           <div className="bg-gray-50 px-6 py-4 rounded-b-lg">
-            <p className="text-sm text-gray-600">
-              A imagem mostra a segmentação em 6 classes: Building, Land, Road, Vegetation, Water e Unlabeled.
-            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { name: 'Building', color: '#3C1098' },
+                { name: 'Land', color: '#8429F6' },
+                { name: 'Road', color: '#6EC1E4' },
+                { name: 'Vegetation', color: '#FEDD3A' },
+                { name: 'Water', color: '#E2A929' },
+                { name: 'Unlabeled', color: '#9B9B9B' },
+              ].map((cls) => (
+                <div key={cls.name} className="flex items-center gap-3">
+                  <div
+                    className="w-6 h-6 rounded border border-gray-300"
+                    style={{ backgroundColor: cls.color }}
+                  />
+                  <span className="text-gray-700">{cls.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
