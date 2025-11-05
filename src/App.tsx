@@ -4,6 +4,7 @@ import ResultModal from './components/ResultModal'
 
 function App() {
   const [predictedImage, setPredictedImage] = useState<string | null>(null)
+  const [originalImage, setOriginalImage] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -12,11 +13,15 @@ function App() {
     setIsLoading(true)
     setError(null)
 
+    // Criar URL da imagem original
+    const originalImageUrl = URL.createObjectURL(file)
+    setOriginalImage(originalImageUrl)
+
     const formData = new FormData()
     formData.append('image', file)
 
     try {
-      const response = await fetch('/api/predict', {
+      const response = await fetch('http://localhost:3338/predict', {
         method: 'POST',
         body: formData,
       })
@@ -42,6 +47,10 @@ function App() {
     if (predictedImage) {
       URL.revokeObjectURL(predictedImage)
       setPredictedImage(null)
+    }
+    if (originalImage) {
+      URL.revokeObjectURL(originalImage)
+      setOriginalImage(null)
     }
   }
 
@@ -94,7 +103,8 @@ function App() {
       <ResultModal
         isOpen={isModalOpen}
         onClose={closeModal}
-        imageUrl={predictedImage}
+        originalImageUrl={originalImage}
+        predictedImageUrl={predictedImage}
       />
     </div>
   )
